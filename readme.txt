@@ -7,21 +7,3 @@ Tested up to: 3.5
 Stable tag: 0.1
 
 Wordpress - Paradiso  LMS integration plugin
-
-== Description ==
-
-Wordpress - LMS integration plugin
-
-== Installation ==
-
-
-== Frequently Asked Questions ==
-
-
-== Screenshots ==
-
-
-== Changelog ==
-
-= 0.1 =
-- Initial Revision
