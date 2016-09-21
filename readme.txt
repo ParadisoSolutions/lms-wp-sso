@@ -1,7 +1,5 @@
 === Paradiso LMS ===
-Contributors: Yassir Terri Mejia
-Donate link:
-Tags:
+Contributors: Paradiso Solutions
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires at least: 3.5
@@ -12,7 +10,7 @@ Wordpress - Paradiso  LMS integration plugin
 
 == Description ==
 
-Wordpress - Paradiso  LMS integration plugin
+Wordpress - LMS integration plugin
 
 == Installation ==
 
