@@ -408,7 +408,7 @@ class ParadisoLms_Plugin extends ParadisoLms_LifeCycle {
    
     function sso_page()
     {
-        if (is_user_logged_in())
+        if(is_user_logged_in())
         {
             $tokenSalt = $this->getOption('sso_token_salt');
             $lmsUrl = $this->getOption('sso_lms_url');
@@ -472,10 +472,6 @@ class ParadisoLms_Plugin extends ParadisoLms_LifeCycle {
                 }
             }
 
-            $secretPart = $username . $email;
-            $timestamp = time();
-
-            $token = crypt($timestamp . $secretPart, $tokenSalt);
 
             #
             $data = array();
@@ -485,13 +481,8 @@ class ParadisoLms_Plugin extends ParadisoLms_LifeCycle {
             $data['ln'] = $lastName;
             $data['city'] = $city;
             $data['country'] = $country;
-            $data['token'] = $token;
-            $data['ts'] = $timestamp;
-            $data['timestamp'] = $timestamp;
 
-            $params = http_build_query($data, '&');
-            
-            $ssoUrl = "{$lmsUrl}/auth/token/index.php?{$params}";
+            $ssoUrl = $this->getSsoUrl($data);
             
             if(headers_sent())
             {
@@ -503,6 +494,61 @@ class ParadisoLms_Plugin extends ParadisoLms_LifeCycle {
                 exit;
             }
         }
+    }
+
+
+    /**
+     * Builds the SSO url that can be used to redirect users to the PLMS
+     * below you can see the list of REQUIRED values
+     * You can also add to the $params variable any other value you want
+     * All variables will be added to the final SSO url
+     * 
+     * @param array $params
+     * @var string email - [REQUIRED]
+     * @var string user - [REQUIRED] the username
+     * @var string fn - [REQUIRED] first name
+     * @var string ln - [REQUIRED] last name
+     * @var string city - [REQUIRED] 
+     * @var string country - [REQUIRED] 
+     * 
+     * @example
+     * {
+     *     $data = array();
+     *     $data['email'] = 'email@email.com';
+     *     $data['user'] = 'uniqusername';
+     *     $data['fn'] = 'Will';
+     *     $data['ln'] = 'Smith';
+     *     $data['city'] = 'City name';
+     *     $data['country'] = 'US';
+     *
+     *     $plmsSSo = new ParadisoLms_Plugin();
+     *     $ssoUrl = $plmsSSo->getSsoUrl($data);
+     * }
+     * 
+     * @return string
+     */
+    function getSsoUrl(array $params)
+    {
+        $tokenSalt = $this->getOption('sso_token_salt');
+        $lmsUrl = $this->getOption('sso_lms_url');
+
+        $username = $params['user'];
+        $email = $params['email'];
+
+        $secretPart = $username . $email;
+        $timestamp = time();
+
+        $token = crypt($timestamp . $secretPart, $tokenSalt);
+
+        $params['token'] = $token;
+        $params['ts'] = $timestamp;
+        $params['timestamp'] = $timestamp;
+
+        $params = http_build_query($params, '&');
+            
+        $ssoUrl = "{$lmsUrl}/auth/token/index.php?{$params}";
+
+        return $ssoUrl;
     }
 
 
