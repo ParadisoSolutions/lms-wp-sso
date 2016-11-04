@@ -141,6 +141,9 @@ class ParadisoLms_Plugin extends ParadisoLms_LifeCycle {
 
     public function addActionsAndFilters() {
 
+        $callback = array(&$this, 'assets');
+        add_action('admin_enqueue_scripts', $callback);
+
         // Add options administration page
         // http://plugin.michael-simpson.com/?page_id=47
         add_action('admin_menu', array(&$this, 'addSettingsSubMenuPage'));
@@ -149,6 +152,29 @@ class ParadisoLms_Plugin extends ParadisoLms_LifeCycle {
         add_action('admin_menu', array(&$this, 'add_sso_menu_link'));
         add_action('admin_bar_menu', array(&$this, 'add_sso_menu_link'), 999);
 
+        // Add Actions & Filters
+        // http://plugin.michael-simpson.com/?page_id=37
+
+
+        // Adding scripts & styles to all pages
+        // Examples:
+        //        wp_enqueue_script('jquery');
+        //        wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
+        //        wp_enqueue_script('my-script', plugins_url('/js/my-script.js', __FILE__));
+
+
+        // Register short codes
+        // http://plugin.michael-simpson.com/?page_id=39
+
+
+        // Register AJAX hooks
+        // http://plugin.michael-simpson.com/?page_id=41
+
+    }
+
+
+    function assets()
+    {
         // add a js to allow open the link in a new tab
         wp_enqueue_script('add_sso_menu_links', plugins_url('/js/add_sso_menu_link.js', __FILE__));
 
@@ -174,26 +200,6 @@ class ParadisoLms_Plugin extends ParadisoLms_LifeCycle {
                 wp_enqueue_style('settings-page', plugins_url('/css/settings-page.css', __FILE__));
             }
         }
-
-
-        // Add Actions & Filters
-        // http://plugin.michael-simpson.com/?page_id=37
-
-
-        // Adding scripts & styles to all pages
-        // Examples:
-        //        wp_enqueue_script('jquery');
-        //        wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
-        //        wp_enqueue_script('my-script', plugins_url('/js/my-script.js', __FILE__));
-
-
-        // Register short codes
-        // http://plugin.michael-simpson.com/?page_id=39
-
-
-        // Register AJAX hooks
-        // http://plugin.michael-simpson.com/?page_id=41
-
     }
 
 
